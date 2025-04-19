@@ -3,6 +3,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
+    "composite": true,
     "module": "ESNext",
     "resolveJsonModule": true,
     "outDir": "./dist", // Specify a separate output directory

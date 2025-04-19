@@ -5,14 +5,14 @@ A lightweight and customizable library for creating smooth scroll animations in 
 ## Installation
 
 ```bash
-npm install svelte-smooth-scroll-animations
+npm install svelte-inscroll
 ```
 
 ## Usage
 
 ```svelte
 <script>
-  import { ScrollAnimation } from 'svelte-smooth-scroll-animations';
+  import { ScrollAnimation } from 'svelte-inscroll';
 </script>
 
 <ScrollAnimation animation="fade-up" delay={200} duration={800}>
