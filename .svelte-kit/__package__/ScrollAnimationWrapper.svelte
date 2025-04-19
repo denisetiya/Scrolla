@@ -1,6 +1,7 @@
 <script>
     import { onMount, onDestroy } from "svelte";
     import { animationVariants, getRandomDelay } from "./animations.js";
+
     export let animation = "fade-up";
     export let delay = 0;
     export let duration = 800;
@@ -10,13 +11,22 @@
     export let customClass = "";
     export let customStyles = {};
 
+    /**
+     * @type {IntersectionObserver}
+     */
     let observer;
+    /**
+     * @type {Element}
+     */
     let element;
     let isInView = false;
-    let actualDelay = delay === "random" ? getRandomDelay() : delay;
+    let actualDelay = typeof delay === "string" && delay === "random" ? getRandomDelay() : delay;
 
     $: animationStyle =
-        animationVariants[animation] || animationVariants["fade-up"];
+        (animation in animationVariants
+            // @ts-ignore
+            ? animationVariants[animation]
+            : animationVariants["fade-up"]);
     $: transitionDuration = `${duration}ms`;
 
     function getTransformStyle() {
@@ -59,12 +69,14 @@
         ? 'in-view'
         : ''}"
     style="
-    --animation-delay: {actualDelay}ms;
-    --animation-duration: {transitionDuration};
-    {Object.entries(customStyles)
-        .map(([key, value]) => `${key}: ${value};`)
-        .join(' ')}
-  "
+        --animation-delay: {actualDelay}ms;
+        --animation-duration: {transitionDuration};
+        transform: {isInView ? animationStyle.animate : getTransformStyle()};
+        opacity: {isInView ? 1 : 0};
+        {Object.entries(customStyles)
+            .map(([key, value]) => `${key}: ${value};`)
+            .join(' ')}
+    "
 >
     <slot />
 </div>
@@ -79,20 +91,138 @@
         will-change: opacity, transform;
     }
 
-    /* Animation states are controlled by the animation variable */
-    .scroll-animation.in-view {
-        opacity: 1;
-    }
-
-    /* Add keyframe animations */
-    .bounce-in.in-view {
-        animation: bounce-up var(--animation-duration)
-            cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    /* Animations with keyframes */
+    .fade-up.in-view {
+        animation: fade-up var(--animation-duration) ease-out forwards;
         animation-delay: var(--animation-delay, 0ms);
     }
 
-    .bounce-in:not(.in-view) {
-        animation: none;
+    @keyframes fade-up {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .fade-down.in-view {
+        animation: fade-down var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes fade-down {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .fade-left.in-view {
+        animation: fade-left var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes fade-left {
+        from {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .fade-right.in-view {
+        animation: fade-right var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes fade-right {
+        from {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .zoom-in.in-view {
+        animation: zoom-in var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes zoom-in {
+        from {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .zoom-out.in-view {
+        animation: zoom-out var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes zoom-out {
+        from {
+            transform: scale(1.1);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .flip-in.in-view {
+        animation: flip-in var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes flip-in {
+        from {
+            transform: rotateY(-180deg);
+            opacity: 0;
+        }
+        to {
+            transform: rotateY(0);
+            opacity: 1;
+        }
+    }
+
+    .rotate-in.in-view {
+        animation: rotate-in var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes rotate-in {
+        from {
+            transform: rotate(90deg);
+            opacity: 0;
+        }
+        to {
+            transform: rotate(0);
+            opacity: 1;
+        }
+    }
+
+    .bounce-in.in-view {
+        animation: bounce-up var(--animation-duration) cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        animation-delay: var(--animation-delay, 0ms);
     }
 
     @keyframes bounce-up {
@@ -105,6 +235,22 @@
             opacity: 1;
         }
         100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .slide-up.in-view {
+        animation: slide-up var(--animation-duration) ease-out forwards;
+        animation-delay: var(--animation-delay, 0ms);
+    }
+
+    @keyframes slide-up {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
             transform: translateY(0);
             opacity: 1;
         }
