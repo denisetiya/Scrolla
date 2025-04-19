@@ -1,9 +1,9 @@
 {
   "name": "svelte-inscroll",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "A smooth scroll animation library for Svelte applications",
-  "author": "Your Name",
+  "author": "Deni Setiya",
   "license": "MIT",
   "keywords": [
     "svelte",
@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "svelte-package",
+    "build": "svelte-package && cp src/lib/animation.js dist/",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "prepublishOnly": "npm run build"

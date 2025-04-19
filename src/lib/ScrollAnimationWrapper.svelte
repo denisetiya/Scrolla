@@ -1,7 +1,6 @@
 <script>
     import { onMount, onDestroy } from "svelte";
     import { animationVariants, getRandomDelay } from "./animations.js";
-
     export let animation = "fade-up";
     export let delay = 0;
     export let duration = 800;
