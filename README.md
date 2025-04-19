@@ -2,6 +2,9 @@
 
 A lightweight and customizable library for creating smooth scroll animations in Svelte applications.
 
+## Demo
+[Svelte InScroll](https://svelte-inscroll.vercel.app/)
+
 ## Installation
 
 ```bash
