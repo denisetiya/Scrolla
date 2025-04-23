@@ -55,7 +55,7 @@ npm install svelte-inscroll
 
 ```svelte
 <script>
-  import { ScrollAnimation } from 'svelte-smooth-scroll-animations';
+  import { ScrollAnimation } from 'svelte-inscroll';
   
   const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 </script>
