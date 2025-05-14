@@ -1,6 +1,6 @@
 {
   "name": "svelte-inscroll",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "type": "module",
   "description": "A smooth scroll animation library for Svelte applications",
   "author": "Deni Setiya",
